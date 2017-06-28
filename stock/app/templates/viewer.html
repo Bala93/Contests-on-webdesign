@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %}Stock{% endblock %}
+{% block nav_user %}
+
+{% endblock %}
+{% block content %}
+
+<style type="text/css">
+ .axis {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .axis .x .y path {
+    display: none;
+  }
+
+  .line {
+    fill: none;
+    stroke: white;
+    stroke-width: 1.5px;
+  }
+
+  .chart-svg-component  {
+    fill:#365899;
+  }
+
+/*.chartline{
+  fill:#ffffff;
+}
+*/
+.clrlbl{
+  color:purple;
+ font-size: 20px;
+
+}
+
+.clrlbl1{
+  color: blue;
+  font-size: 50px;
+    margin-left: 30px;
+
+
+}
+
+
+
+/*.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+.grid path {
+          stroke-width: 0;
+}
+
+.area {
+    fill: lightsteelblue;
+      stroke-width: 0;
+}
+*/
+
+</style>
+
+
+<script src = "/static/d3.v3.min.js"></script>
+
+<div class = "container">
+
+{% for cc in info %}
+<p>
+Symbol : {{cc.symbol}}</br>
+Name   : {{cc.name}} </br>
+Market Cap : {{cc.marketcap}}</br>
+Sector : {{cc.sector}} </br>
+Industry : {{cc.industry}} </br>
+</p>
+
+{% csrf_token %}
+<script>
+var interval = window.setInterval(ajax_post,10000);
+var tradetime = [];
+var tradevalue = [];
+var count = 0;
+function ajax_post(){
+
+$.ajax({
+	type:"POST",
+	url :window.location['href'],
+	data : window.location['href'].split('/').slice(5,6),
+	success:function(result)
+	{
+	  val = result;
+	  tra_val = parseFloat(val.split('  ')[1]);
+	  tradevalue.push(tra_val);
+	  tradetime.push(count);
+	  count += 1; 
+	  temp(tradevalue) ;
+	}
+});
+};
+</script>
+{% endfor %}
+
+<div id = "Hchart_svg_container">
+<script type = 'text/javascript' src = '/static/graph.js'>
+
+</script>
+</div>
+
+
+</div>
+
+</div>
+
+{% endblock content %}

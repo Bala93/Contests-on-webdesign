@@ -1,0 +1,14 @@
+This is python based application
+
+Django is used.
+
+Use pip to install the packages.
+
+Registration is provided
+Graph update is provided
+sqlite is used. 
+
+python manage.py runserver to run the application.
+
+In pictures folder, the snapshots are provided. 
+python google finances module is used.
