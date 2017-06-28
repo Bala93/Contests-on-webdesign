@@ -1,0 +1,164 @@
+Accenture: Premier League
+[Problem statement]
+
+Develop a self-contained, pseudo, front end web app for the Indian Premier League.
+
+Implement the following in the web app:
+
+-- Simulation (in real-time) of live matches
+
+--Display scores of each live match
+
+--Display stats of the live match
+
+--List all the matches that have been played between different teams in the past
+
+**Note**: The .csv file that contains extensive information about the past matches that were played has been provided.
+--Display (on the front end) comprehensive information about the matches when the user clicks an item
+
+Note: You are expected to implement multiple controllers for various features that you develop.
+
+[Minimum requirements] (level 0)
+
+--Use the CSV file that is provided.
+
+--Write functional front end code that is mentioned in the Tech stack section.
+
+Implement the following:
+
+--At least two controllers in AngularJS
+
+--Data sharing between the controllers
+
+--irective to display past matches
+
+--Directive to implement the score of a real-time, live match
+
+--Follow the best practices and coding guidelines
+
+--List all the match information on the front end
+
+--Zip and upload the following
+
+--Source code
+
+--Executables
+
+--Screenshots
+
+[Additional points] (level 1)
+
+--Implement a live match simulation using a controller by following the instructions about implementing live match simulation provided here.
+
+--When the user clicks a listed item, display comprehensive information about that match in a separate dedicated page.
+
+Implement the following options on the front end:
+
+--Search for team matches by name
+
+--Filter-based search on different seasons of the tournament Implement paging ​to display the results on the front end​
+
+Perform QA testing using the following applications:
+
+--Chai
+
+--Mocha
+
+--Jasmine
+
+--Protractor
+
+--Karma
+
+--Share the code and extensive test reports
+
+Zip and upload the following:
+
+Source code
+
+Executables
+
+Screenshots
+
+[Advanced] (level 2)
+
+Building, testing, and deploying using Jenkins (optional)
+
+**Note**: You are expected to write production-level, generic, robust, and standalone code.
+Share the code and extensive test reports
+
+Use JavaScript build tools, such as:
+
+Webpack
+
+Grunt
+
+Gulp
+
+Use a custom design, font, and icons to make the application more user-friendly
+
+Add portfolio ​activity comprising your work on the tech stack mentioned in the Tech stack section
+
+Add any other features that you think will help the user use this application easily.
+
+Comment on, beautify, and document your code.
+
+Handle the following:
+
+Input exceptions
+
+Unicode
+
+Null values
+
+Zip and upload the following:
+
+Source code
+
+Executables
+
+Screenshots
+
+[Guide]
+
+Premier League CSV: http://hck.re/A1Fz4c
+
+Tech stack
+
+Frontend
+
+AngularJS 1/Angular 2/Angular 4
+
+CSS3
+
+HTML5
+
+Javascript
+
+Bootstrap
+
+JQuery
+
+DevOps requirements
+
+QA testing:
+
+Chai
+
+Mocha
+
+Jasmine
+
+Protractor
+
+Karma
+
+Building, testing, and deploying using Jenkins (optional)
+
+JavaScript build tools:
+
+Webpack
+
+Grunt
+
+Gulp
