@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load admin_urls %}
+{% load bootstrap3 %}
+{% block title %}Gaming{% endblock %}
+{% block content %}
+<div class="container">
+  <div class = "ui-widget">
+    <h4><label for "tags">Game name</label></h4>
+     <input id = "tags">
+     <i class="fa fa-search"></i>
+  </div>
+  </br>
+  <i>Sorted by score</i>
+    <div class = "col-md-12">
+    <div class="table-responsive col-md-8">
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+	{% if flag != "platform" %}
+          <th>Platform</th>
+	{% endif %}
+          <th>Score</th>
+	{% if flag != "genre" %}
+	  <th>Genre</th>
+	{% endif %}
+	  <th>Editors_choice</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for games in listofgames %}
+          <tr>
+            <td> <a href = '/games/{{games.id}}'>{{ games.title}}</td></a>
+	{% if flag != "platform" %}
+            <td>{{ games.platform}}</td>
+	{% endif %}
+            <td>{{ games.score}}</td>
+	{% if flag != "genre" %}
+	    <td>{{ games.genre}}</td>
+	{% endif %}
+	{% if games.editors_choice == "Y" %}
+	    <td align = "center"><i class="fa fa-check-circle"></i></td>
+	{% else %}
+	    <td align = "center"><i class="fa fa-ban"></i></td>
+	{% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if listofgames.has_other_pages %}
+      <ul class="pagination">
+        {% if listofgames.has_previous %}
+          <li><a href="?page={{ listofgames.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in listofgames.paginator.page_range %}
+          {% if listofgames.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if listofgames.has_next %}
+          <li><a href="?page={{ listofgames.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+    </div>
+    {% if flag == "all" %}
+    <div class = "col-md-4 btn-group-vertical btb-group-sm">
+      <a href = "/games/platform/1"class = "btn btn-primary">Platform</a>
+      <a href = "/games/genre/1" class = "btn btn-primary">Genre</a>
+    </div>
+   
+    {% elif flag == "platform" %}
+    <div class = "col-md-4 btn-group-vertical btn-group-sm">
+      {% for each in platforms %}
+      {% if each == cur_platform %}
+         <a href = "/games/platform/{{forloop.counter}}"class = "btn btn-success">{{each}}</a>
+      {% else %}
+         <a href = "/games/platform/{{forloop.counter}}"class = "btn btn-primary">{{each}}</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class = "col-md-4 btn-group-vertical btn-group-xs">
+      {% for each in genres %}
+      {% if each != "" %}
+      {% if each == cur_genre %}
+          <a href = "/games/genre/{{forloop.counter}}" class = "btn btn-success">{{each}}</a>
+      {% else %}
+          <a href = "/games/genre/{{forloop.counter}}" class = "btn btn-primary">{{each}}</a>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+ 
+    </div>
+   {%endif%}
+     
+
+  </div>
+<script>
+  $( function() {
+    var availableTags = {{allgames|safe}};
+    $( "#tags" ).autocomplete({
+      source: availableTags,
+      change:function(sug,ui){
+        window.location.href ='/games/'+ (availableTags.indexOf(ui.item.value) + 1);        
+        }
+    });
+  } );
+</script>
+
+
+
+{% endblock %}
+
+
+
+
+

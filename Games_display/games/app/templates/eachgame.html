@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %}Games{% endblock %}
+{% block content %}
+  <div class="container">
+  {% for de in gameinfo.info %}
+  <table class = "table">
+  <tbody>
+  <tr><td>Name		  :	{{de.title}}</td></tr>
+  <tr><td>Platform	  :	{{de.platform}}</td></tr>
+  <tr><td>Score           :	{{de.score}}</td></tr>
+  <tr><td>Genre           :	{{de.genre}}</td></tr>
+  <tr><td>Editor's choice : 	{{de.editors_choice}}</td></tr>
+  </tbody>
+  </table> 
+  {% endfor %}
+
+  </div> <!-- /.container -->
+{% endblock content %}
