@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %}LYNK{% endblock %}
+{% block nav_user %}
+  {% if user.is_authenticated %}
+    <ul class="nav navbar-nav navbar-right">
+      <li id="nav-username"><a href="{% url 'app.views.profile' %}">
+        <span class="glyphicon glyphicon-user"></span>  {{ user.get_username }} &nbsp; </a>
+      </li>
+      <li>
+        <a href="{% url 'django.contrib.auth.views.logout' %}">Sign out</a>
+      </li>
+    </ul>
+  {% else %}
+    <form class="navbar-form navbar-right" 
+          method="post" 
+          action="{% url 'django.contrib.auth.views.login' %}">
+      {% csrf_token %}
+      {% bootstrap_field form.username show_label=False %}
+      {% bootstrap_field form.password show_label=False %}
+      <input type="hidden" name="next" value="{% url 'app.views.home' %}" />
+      <button type="submit" class="btn btn-success">Sign in</button>
+    </form>
+  {% endif %}
+{% endblock %}
+{% block content %}
+	<div class="container">
+	<p>For information please contact:</p>
+  </br>
+  <h3>Goldenratio</h3>
+  <ul>
+  <li>balamuralim.1993@gmail.com</li>
+  <li>arul.csecit@ymail.com </li>
+  <li>sharathms.iit@gmail.com </li>
+  </ul>
+  </div> <!-- /.container -->
+{% endblock content %}

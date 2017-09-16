@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %}LYNK{% endblock %}
+{% block nav_user %}
+<style>
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+</style>
+
+  {% if user.is_authenticated %}
+    <ul class="nav navbar-nav navbar-right">
+      <li id="nav-username"><a href="{% url 'app.views.profile' %}">
+        <span class="glyphicon glyphicon-user"></span>  {{ user.get_username }} &nbsp; </a>
+      </li>
+      <li>
+        <a href="{% url 'django.contrib.auth.views.logout' %}">Sign out</a>
+      </li>
+    </ul>
+  {% else %}
+    <form class="navbar-form navbar-right" 
+          method="post" 
+          action="{% url 'django.contrib.auth.views.login' %}">
+      {% csrf_token %}
+      {% bootstrap_field form.username show_label=False %}
+      {% bootstrap_field form.password show_label=False %}
+      <input type="hidden" name="next" value="{% url 'app.views.home' %}" />
+      <button type="submit" class="btn btn-success">Sign in</button>
+    </form>
+  {% endif %}
+{% endblock %}
+{% block content %}
+	<div class="container">
+      <div class="jumbotron">
+		<div class="container">
+				<div class = "col-md-6">
+          <h1>Recognize me</h1>
+          <!-- <p class="lead">Latest games</p> -->
+		  		{% if not user.is_authenticated %}
+        		    <p><a class="btn btn-lg btn-primary" 
+				  href="{% url 'registration_register' %}">Register</a> 
+			  &nbsp;
+		              <a class="btn btn-lg btn-success" 
+				  href="{% url 'django.contrib.auth.views.login' %}">Sign in</a>
+		            </p>
+            {% else %}
+
+					<button onclick="ajax_post()">Click me</button>
+					<p id="score" style="display:none">Loading......</p>
+          <!--form action="/lynk/upload/" method="post">
+              {{ form }}
+              <input type="submit" value="Submit" />
+          </form-->
+            
+        <!-- <a href="/games/list/">View games</a> -->
+        
+
+		{% endif %}
+				</div>		  
+				<div class = "col-md-6">
+   				<a href = "/games/list"><img src = '/static/home.png'  class = "img-rounded" width = '500' height = '300'></a>
+				</div>
+		</div> <!-- /.container -->
+	  </div> <!-- /.jumbotron -->
+    <!-- <div class = "col-md-12">
+   <div class = "col-md-4"><img src = '/static/CARS.jpg' class = "img-rounded"></div>
+   <div class = "col-md-4"><img src = '/static/ASSASSINS-CREED.jpg'  class = "img-rounded"></div>
+   <div class = "col-md-4"><img src = '/static/fifa.jpg' class = "img-rounded"></div>
+   </div> -->
+  </center>
+    </div> <!-- /.container -->
+
+
+<script>
+
+//document.getElementById("post").onclick = ajax_post;
+function ajax_post()
+{
+
+document.getElementById("score").style.display = "block";
+var score = 0;
+var count = 0;
+var score_arr = [];
+var res = {{results|safe}}
+;//[{"teamname":"Goldenratio","imageuid":23,"name":"abinaya"},{"teamname":"Goldenratio","imageuid":25,"name":"abinaya"},{"teamname":"Goldenratio","imageuid":30,"name":"abinaya"}]
+
+for (var i = 0 ;i < res.length ; i++){
+	in_data = res[i]  
+	$.ajax({
+   type : 'POST',
+   url  : 'https://us-central1-lynkhacksmock.cloudfunctions.net/verifyface',
+   data :  in_data,//{"teamname":"Goldenratio","imageuid":23,"name":"abinaya"},
+  // contentType:"application/json;charset=utf-8",
+	 crossDomain: true,
+   /*xhrFields:{
+    withCredentials : false
+   }*/
+   dataType: 'json',
+   //headers : {"Access-Control-Allow-Origin":'*'},
+	 success : function(res) {
+	   //console.log("In");
+    // console.log(r1.responseText);
+    //console.log(res);
+	},
+  error:function(err){
+     //console.log(err);
+		 out = err.responseText;
+		 score += parseInt(out.split(' ')[2]);
+		 score_arr.push(score);
+		 //console.log(score);	
+		 count += 1;
+		 if (count == res.length){
+			 final_score = score/count;
+			 document.getElementById("score").innerHTML = "Score:" + final_score;
+			 
+		 }
+		 //console.log(err);
+	}
+    
+
+});
+
+
+}
+ 
+}
+
+</script>
+
+
+
+
+<!--script type = "text/javascript">
+$(document).ready(function(){
+ $('.img_carousel').slick();});
+</script-->
+{% endblock content %}
